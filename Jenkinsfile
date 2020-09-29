@@ -1,11 +1,5 @@
 pipeline {
   agent any
-  parameters {
-    choice(choices: 'develop\nmaster', description: 'Which branch?', name: 'BRANCH')
-  }
-  environment {
-    GIT_BRANCH = sh(returnStdout: true, script: 'git describe --always').trim()
-  }
   stages {
     stage('Env Variables') {
       steps {
@@ -14,7 +8,10 @@ pipeline {
     }
     stage('build-staging') {
       when {
-        environment name: 'BRANCH', value: 'develop'  
+        expression {
+          GIT_BRANCH = sh(returnStdout: true, script: 'git rev-parse --abbrev-ref HEAD').trim()
+          return (GIT_BRANCH == 'develop')
+        }  
       }
       steps {
         echo "BUILD STAGING - develop"
@@ -22,7 +19,10 @@ pipeline {
     }
     stage('build-production') {
       when {
-        environment name: 'BRANCH', value: 'master'
+        expression {
+          GIT_BRANCH = sh(returnStdout: true, script: 'git rev-parse --abbrev-ref HEAD').trim()
+          return (GIT_BRANCH == 'master')
+        }
       }
       steps {
         echo "BUILD PRODUCTION - master"

@@ -8,7 +8,7 @@ pipeline {
     }
     stage('build-staging') {
       when {
-        branch 'develop'
+        env.GIT_BRANCH == 'develop'  
       }
       steps {
         echo "BUILD STAGING - develop"
@@ -16,7 +16,7 @@ pipeline {
     }
     stage('build-production') {
       when {
-        branch 'master'
+        env.GIT_BRANCH == 'master'
       }
       steps {
         echo "BUILD PRODUCTION - master"

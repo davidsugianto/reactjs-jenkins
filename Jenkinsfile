@@ -10,7 +10,7 @@ pipeline {
       when {
         expression {
           GIT_BRANCH = sh(returnStdout: true, script: 'git rev-parse --abbrev-ref HEAD').trim()
-          return (GIT_BRANCH == 'develop')
+          return (GIT_BRANCH == 'origin/develop')
         }  
       }
       steps {
@@ -21,7 +21,7 @@ pipeline {
       when {
         expression {
           GIT_BRANCH = sh(returnStdout: true, script: 'git rev-parse --abbrev-ref HEAD').trim()
-          return (GIT_BRANCH == 'master')
+          return (GIT_BRANCH == 'origin/master')
         }
       }
       steps {

@@ -1,19 +1,30 @@
 pipeline {
   agent any
   stages {
-    stage('Build') {
+    stage('build-staging') {
+      when {
+        branch 'develop'
+      }
       steps {
-        echo "Bulding..."
+        echo "BUILD STAGING - develop"
       }
     }
-    stage('Test') {
+    stage('build-production') {
+      when {
+        branch 'master'
+      }
       steps {
-        echo "Testing..."
+        echo "BUILD PRODUCTION - master"
       }
     }
-    stage('Deploy') {
+    stage('test') {
       steps {
-        echo "Deploying..."
+        echo "TESTING"
+      }
+    }
+    stage('deploy') {
+      steps {
+        echo "DEPLOYING"
       }
     }
   } 

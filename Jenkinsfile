@@ -1,6 +1,11 @@
 pipeline {
   agent any
   stages {
+    stage('Env Variables') {
+      steps {
+        sh "printenv"
+      }
+    }
     stage('build-staging') {
       when {
         branch 'develop'

@@ -8,10 +8,7 @@ pipeline {
     }
     stage('build-staging') {
       when {
-        expression {
-          GIT_BRANCH = sh(returnStdout: true, script: 'git rev-parse --abbrev-ref HEAD').trim()
-          return (GIT_BRANCH == 'origin/develop')
-        }  
+        branch 'develop'  
       }
       steps {
         echo "BUILD STAGING - develop"
@@ -19,10 +16,7 @@ pipeline {
     }
     stage('build-production') {
       when {
-        expression {
-          GIT_BRANCH = sh(returnStdout: true, script: 'git rev-parse --abbrev-ref HEAD').trim()
-          return (GIT_BRANCH == 'origin/master')
-        }
+        branch 'master'
       }
       steps {
         echo "BUILD PRODUCTION - master"
